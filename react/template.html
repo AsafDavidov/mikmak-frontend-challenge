@@ -26,10 +26,17 @@
           };
         },
         startPause() {
+          //Check if it is currently counting
           if (this.state.counting) {
+            //If it is change state to reflect that it is no longer counting
+            //Clear the interval to stop it from counting
             this.setState({counting:false})
             clearInterval(this.intervalID)
           } else {
+            //Otherwise change state to reflect that it is now counting
+            //setInterval equal to a variable the interval id number for pausing later
+            //Through arrow function update state cleanly based on previous value
+            //have this repeat every second
             this.setState({counting:true})
             this.intervalID = setInterval(()=>{
               this.setState(()=>({count: this.state.count + 1}));
@@ -39,9 +46,20 @@
         reset() {
           this.setState({count:0})
         },
-        convertCountToTime(numberOfSeconds){
-          console.log(numberOfSeconds);
-          return `00:00:${numberOfSeconds}`
+        //Method to display the raw second count to its equivalent HH:MM:SS format
+        convertCountToTime(count){
+
+          let numberOfMinutes,numberOfSeconds,numberOfHours;
+          //3600 seconds in an hour gives this quick conversion
+          numberOfHours = Math.floor(count/3600)
+          //Number of minutes from the raw count is the first value you, but then the number of minutes that have been converted
+          //into hours must be taken into account
+          numberOfMinutes = Math.floor(count/60) - (numberOfHours*60)
+          //Lastly Number of again from raw count with seconds that have been allocated to hours and minutes removed
+          //with the correct conversion
+          numberOfSeconds = count -(numberOfHours*3600) - (numberOfMinutes*60)
+          //formatting each number to display additional 0 when necessary
+          return `${numberOfHours}:${numberOfMinutes}:${numberOfSeconds}`
         },
         render() {
           return (
