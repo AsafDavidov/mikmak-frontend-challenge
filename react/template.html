@@ -63,6 +63,9 @@
           return `${this.formatNumberToDisplay(numberOfHours)}:${this.formatNumberToDisplay(numberOfMinutes)}:${this.formatNumberToDisplay(numberOfSeconds)}`
         },
         //formatting each number to display additional 0 when necessary
+        //will only take last 2 digits of number so 9=>"09" last two digits are the whole string
+        //meanwhile 10=>"010" now last two digits are "10"
+        //additionally fixes max hour issue since 100=>0100 and will return 00
         formatNumberToDisplay(number){
           return ("0" + number).slice(-2)
         },
