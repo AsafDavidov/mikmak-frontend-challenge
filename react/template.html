@@ -36,19 +36,23 @@
             }, 1000)
           }
         },
-        decrement() {
-          if (this.state.count > 0) this.setState({count: this.state.count - 1});
+        reset() {
+          this.setState({count:0})
+        },
+        convertCountToTime(numberOfSeconds){
+          console.log(numberOfSeconds);
+          return `00:00:${numberOfSeconds}`
         },
         render() {
           return (
             <div>
               <h1 className="app-title">{ this.state.title }</h1>
               <div className="app-current-count">
-                { `${this.state.count}` }
+                { this.convertCountToTime(this.state.count) }
               </div>
               <div className="app-counter-buttons">
                 <button type="button" name="decrement" onClick={this.startPause}>{this.state.counting ? "Stop":"Start"}</button>
-                <button type="button" name="increment" onClick={this.increment}>reset</button>
+                <button type="button" name="increment" onClick={this.reset}>Reset</button>
               </div>
             </div>
           );
