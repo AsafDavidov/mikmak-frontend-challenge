@@ -20,7 +20,7 @@
       var Counter = React.createClass({
         getInitialState() {
           return {
-            count: 0,
+            count: 359940,
             counting: false,
             title: 'React Stopwatch'
           };
@@ -58,8 +58,13 @@
           //Lastly Number of again from raw count with seconds that have been allocated to hours and minutes removed
           //with the correct conversion
           numberOfSeconds = count -(numberOfHours*3600) - (numberOfMinutes*60)
-          //formatting each number to display additional 0 when necessary
-          return `${numberOfHours}:${numberOfMinutes}:${numberOfSeconds}`
+
+
+          return `${this.formatNumberToDisplay(numberOfHours)}:${this.formatNumberToDisplay(numberOfMinutes)}:${this.formatNumberToDisplay(numberOfSeconds)}`
+        },
+        //formatting each number to display additional 0 when necessary
+        formatNumberToDisplay(number){
+          return ("0" + number).slice(-2)
         },
         render() {
           return (
