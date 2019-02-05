@@ -21,11 +21,20 @@
         getInitialState() {
           return {
             count: 0,
-            title: 'React Counter'
+            counting: false,
+            title: 'React Stopwatch'
           };
         },
-        increment() {
-          this.setState({count: this.state.count + 1});
+        startPause() {
+          if (this.state.counting) {
+            this.setState({counting:false})
+            clearInterval(this.intervalID)
+          } else {
+            this.setState({counting:true})
+            this.intervalID = setInterval(()=>{
+              this.setState(()=>({count: this.state.count + 1}));
+            }, 1000)
+          }
         },
         decrement() {
           if (this.state.count > 0) this.setState({count: this.state.count - 1});
@@ -35,11 +44,11 @@
             <div>
               <h1 className="app-title">{ this.state.title }</h1>
               <div className="app-current-count">
-                { this.state.count }
+                { `${this.state.count}` }
               </div>
               <div className="app-counter-buttons">
-                <button type="button" name="decrement" onClick={this.decrement}>-</button>
-                <button type="button" name="increment" onClick={this.increment}>+</button>
+                <button type="button" name="decrement" onClick={this.startPause}>{this.state.counting ? "Stop":"Start"}</button>
+                <button type="button" name="increment" onClick={this.increment}>reset</button>
               </div>
             </div>
           );
