@@ -37,10 +37,14 @@
             //setInterval equal to a variable the interval id number for pausing later
             //Through arrow function update state cleanly based on previous value
             //have this repeat every second
+            //if 99:59:59 reset the clock to zero
             this.setState({counting:true})
             this.intervalID = setInterval(()=>{
-              this.setState(()=>({count: this.state.count + 1}));
-            }, 1000)
+              if (this.state.count<359999) {
+                this.setState(()=>({count: this.state.count + 1}));
+              } else {
+                this.setState({count:0})
+              }}, 1000)
           }
         },
         reset() {
@@ -65,13 +69,13 @@
         //formatting each number to display additional 0 when necessary
         //will only take last 2 digits of number so 9=>"09" last two digits are the whole string
         //meanwhile 10=>"010" now last two digits are "10"
-        //additionally fixes max hour issue since 100=>0100 and will return 00
         formatNumberToDisplay(number){
           return ("0" + number).slice(-2)
         },
         render() {
           return (
             <div>
+              {console.log(this.state.count)}
               <h1 className="app-title">{ this.state.title }</h1>
               <div className="app-current-count">
                 { this.convertCountToTime(this.state.count) }
